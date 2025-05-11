@@ -8,6 +8,7 @@
 #include <fstream>
 #include "page.h"
 #include <memory>
+#include <unordered_map>
 
 #include "freelist.h"
 
@@ -16,14 +17,20 @@ class dal {
 
 public:
     int pageSize;
-    std::unique_ptr<freeList> fl;
+    freeList fl;
+
+    // experimental, idea is that all pages are either in the db file or in the cache
+    std::unordered_map<int, std::unique_ptr<page>> cache;
 
     explicit dal(const std::string& fileName, int pageSize);
     ~dal();
 
     std::unique_ptr<page>allocateEmptyPage();
-    std::unique_ptr<page> readPage(const int pageNum);
-    void writePage(std::unique_ptr<page> page);
+    int createPage();
+    void loadPage(const int pageNum);
+    void writePage(const int pageNum);
+    void deletePage(const int pageNum);
+    void evictPage(const int pageNum);
 
 };
 
