@@ -24,7 +24,11 @@ dal::dal(const std::string& fileName, int pageSize) {
 }
 
 dal::~dal() {
+    // Write to update meta page upon next restore
+    this->m.writeFreeList();
+
     dal::db.close();
+    std::cout << "DB closed" << std::endl;
 }
 
 // NOTE: should probably be set to private and callers should use methods below

@@ -6,11 +6,13 @@
 #define DAL_H
 
 #include <fstream>
-#include "page.h"
 #include <memory>
 #include <unordered_map>
 
+#include "page.h"
 #include "freelist.h"
+#include "meta.h"
+
 
 class dal {
     std::fstream db;
@@ -18,6 +20,7 @@ class dal {
 public:
     int pageSize;
     freeList fl;
+    meta m;
 
     // experimental, idea is that all pages are either in the db file or in the cache
     std::unordered_map<int, std::unique_ptr<page>> cache;

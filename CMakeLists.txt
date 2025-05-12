@@ -9,4 +9,6 @@ add_executable(KvDB main.cpp
         page.h
         page.cpp
         freelist.h
-        freelist.cpp)
+        freelist.cpp
+        meta.h
+        meta.cpp)
