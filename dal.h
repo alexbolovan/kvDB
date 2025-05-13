@@ -17,13 +17,13 @@
 class dal {
     std::fstream db;
 
+
 public:
     int pageSize;
     freeList fl;
-    meta m;
 
     // experimental, idea is that all pages are either in the db file or in the cache
-    std::unordered_map<int, std::unique_ptr<page>> cache;
+    std::unordered_map<uint32_t, std::unique_ptr<page>> cache;
 
     explicit dal(const std::string& fileName, int pageSize);
     ~dal();
@@ -34,6 +34,24 @@ public:
     void writePage(const int pageNum);
     void deletePage(const int pageNum);
     void evictPage(const int pageNum);
+
+
+    // Meta structure is:
+    // Root Page:
+    // -----------------------------------------------------------------------------------
+    // |  maxPage  | length of freeList | freelist entry 1 | freelist entry 2 |    ...   |
+    // | freelist entry 1021 | next page                                                 |
+    // -----------------------------------------------------------------------------------
+    //
+    // Linked Pages
+    // ------------------------------------------------------------------------------------
+    // | freelist entry 1 | freelist entry 2 | ... | freelist entry 1023 | next page      |
+    // ------------------------------------------------------------------------------------
+    // All fields are uint32_t -> 4 bytes
+
+    // Returns tuple of <maxPage, freeList>
+    std::tuple<uint32_t, std::vector<uint32_t>> loadMeta();
+    void writeMeta();
 
 };
 

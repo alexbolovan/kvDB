@@ -4,6 +4,7 @@
 
 #ifndef META_H
 #define META_H
+#include <vector>
 
 // Describes page 0 in db to restore state (of freelist) upon restart
 
@@ -16,8 +17,8 @@ class meta {
     int numEntries;
 
 public:
-    void loadFreeList();
-    void writeFreeList();
+    std::tuple<int, int, std::vector<int>> loadFreeList();
+    void writeFreeList(int maxPage, int numEntries, std::vector<int>& entries);
 
 };
 

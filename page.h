@@ -13,6 +13,8 @@ class page {
 public:
     int pageNum;
     int pageSize;
+
+    // uint8_t = 1 byte
     std::vector<uint8_t> data;
 
     explicit page(int pageSize);

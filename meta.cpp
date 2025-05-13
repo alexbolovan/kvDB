@@ -4,11 +4,24 @@
 
 #include "meta.h"
 
-void meta::loadFreeList() {
+std::tuple<int, int, std::vector<int>> meta::loadFreeList() {
+    std::tuple<int, int, std::vector<int>> data;
 
+    // Deserialize maxPage
+
+    // Deserialize numEntries
+
+    // Deserialize freelist entries
+
+    return data;
 }
 
-void meta::writeFreeList() {
+void meta::writeFreeList(int maxPage, int numEntries, std::vector<int>& entries) {
+    // Serialize maxPage
+
+    // Serialize numEntries
+
+    // Serialize freelist entries
 
 }
 

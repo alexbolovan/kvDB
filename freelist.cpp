@@ -4,11 +4,13 @@
 
 #include "freelist.h"
 
+#include <iostream>
+#include <utility>
 #include <vector>
 
-freeList::freeList() {
-    this->maxPage = 0; // first page reserved for freelist
-    this->freePages = std::vector<int>();
+freeList::freeList(uint32_t maxPage, std::vector<uint32_t> freePages) {
+    this->maxPage = maxPage; // first page reserved for freelist
+    this->freePages = std::move(freePages); // WARNING: not sure if move will cause issues here
 }
 
 int freeList::getNextPage() {
@@ -29,6 +31,14 @@ void freeList::releasePage(int pageNum) {
     auto it = std::lower_bound(this->freePages.begin(), this->freePages.end(), pageNum);
     this->freePages.insert(it, pageNum);
 }
+
+void freeList::printFl() {
+    for (auto &x : this->freePages) {
+        std::cout << x << " ";
+    }
+    std::cout << std::endl;
+}
+
 
 
 
